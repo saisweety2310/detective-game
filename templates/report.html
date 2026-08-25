@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | My Report Dashboard</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- TOP NAVIGATION BAR -->
+        <header class="navbar">
+            <div class="navbar-left">
+                <a href="/" class="navbar-logo">
+                    <i class="fa-solid fa-shield-halved logo-icon"></i>
+                    <span class="logo-text">Phish<span>Guard</span></span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="/" class="nav-link active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                    <a href="/games" class="nav-link"><i class="fa-solid fa-gamepad"></i> Games Center</a>
+                </nav>
+            </div>
+            
+            <!-- ACADEMIC DEMO SIMULATOR PANEL -->
+            <div class="simulator-panel">
+                <label for="user-selector" class="simulator-label">
+                    <i class="fa-solid fa-chalkboard-user"></i> Demo User State:
+                </label>
+                <div class="selector-container">
+                    <select id="user-selector" class="user-select">
+                        <!-- Options will be loaded dynamically -->
+                        <option value="">Loading profiles...</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="navbar-actions">
+                <span class="user-avatar-tag">
+                    <i class="fa-solid fa-user-ninja"></i>
+                    <span id="current-user-name">User</span>
+                </span>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="dashboard-content">
+            <div class="dashboard-header-intro">
+                <h1>My Security Report Card</h1>
+                <p>Real-time analytics and performance dashboard assessing cybersecurity awareness, training, and vulnerability scoring.</p>
+            </div>
+
+            <!-- TOP OVERVIEW METRICS GRID -->
+            <div class="metrics-grid">
+                <!-- CARD 1: OVERALL AWARENESS SCORE -->
+                <div class="metric-card overall-score-card">
+                    <div class="card-header">
+                        <h3>Overall Awareness</h3>
+                        <i class="fa-solid fa-chart-line header-icon"></i>
+                    </div>
+                    <div class="card-body score-circle-container">
+                        <div class="progress-ring-wrapper">
+                            <svg class="progress-ring" width="120" height="120">
+                                <circle class="progress-ring-circle-bg" stroke="#1e293b" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                                <circle class="progress-ring-circle" id="overall-score-circle" stroke="#3b82f6" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                            </svg>
+                            <div class="score-display">
+                                <span class="score-percent" id="overall-score-percent">0%</span>
+                                <span class="score-label" id="awareness-rating">Analyzing...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: RISK LEVEL -->
+                <div class="metric-card risk-level-card">
+                    <div class="card-header">
+                        <h3>Vulnerability & Risk</h3>
+                        <i class="fa-solid fa-triangle-exclamation header-icon"></i>
+                    </div>
+                    <div class="card-body risk-details">
+                        <div class="risk-badge" id="risk-badge">
+                            <span id="risk-text">Calculating</span>
+                        </div>
+                        <div class="risk-indicator-bar">
+                            <div class="risk-indicator-segment low" title="Low Risk"></div>
+                            <div class="risk-indicator-segment med" title="Medium Risk"></div>
+                            <div class="risk-indicator-segment high" title="High Risk"></div>
+                            <div class="risk-indicator-pointer" id="risk-pointer"></div>
+                        </div>
+                        <p class="risk-description" id="risk-description">Risk rating is determined from security quiz and training completion ratios.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 3: LEARNING PROGRESS -->
+                <div class="metric-card learning-card">
+                    <div class="card-header">
+                        <h3>Learning Activity</h3>
+                        <i class="fa-solid fa-graduation-cap header-icon"></i>
+                    </div>
+                    <div class="card-body progress-details">
+                        <div class="progress-item">
+                            <div class="progress-label-row">
+                                <span>Modules Completed</span>
+                                <span id="modules-completed-text">0/6</span>
+                            </div>
+                            <div class="mini-progress-bar">
+                                <div class="mini-progress-fill" id="modules-progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label-row">
+                                <span>Videos & Cyber Bytes</span>
+                                <span id="videos-completed-text">0/3</span>
+                            </div>
+                            <div class="mini-progress-bar">
+                                <div class="mini-progress-fill" id="videos-progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label-row">
+                                <span>Video Quizzes Avg</span>
+                                <span id="video-quiz-avg-text">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE CHARTS & CATEGORY SCORE DETAIL -->
+            <div class="dashboard-details-row">
+                <!-- COLUMN 1: CHART -->
+                <div class="details-card chart-card">
+                    <div class="card-header">
+                        <h3>Performance Blueprint</h3>
+                        <div class="chart-legend-indicator">
+                            <span class="legend-color-dot"></span> Category Score (%)
+                        </div>
+                    </div>
+                    <div class="card-body chart-body">
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: CATEGORY LIST WITH DETAILED PROGRESS BARS -->
+                <div class="details-card categories-card">
+                    <div class="card-header">
+                        <h3>Category Performance</h3>
+                        <i class="fa-solid fa-list-check header-icon"></i>
+                    </div>
+                    <div class="card-body categories-list" id="category-bars-container">
+                        <!-- Dynamic categories go here -->
+                        <div class="skeleton-loader"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STRENGTHS & WEAK AREAS -->
+            <div class="insights-grid">
+                <!-- CARD: STRENGTHS -->
+                <div class="insights-card strength-card-wrap">
+                    <div class="insights-header text-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <h3>Cybersecurity Strengths</h3>
+                    </div>
+                    <div class="insights-body">
+                        <p class="insights-intro-desc">You are successfully practicing strong defense strategies in the following domains:</p>
+                        <ul class="insights-list" id="strengths-list">
+                            <!-- Dynamic list items -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CARD: WEAK AREAS -->
+                <div class="insights-card weak-card-wrap">
+                    <div class="insights-header text-danger">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <h3>Weak Areas (Needs Focus)</h3>
+                    </div>
+                    <div class="insights-body">
+                        <p class="insights-intro-desc">These sectors present vulnerability risks and should be reviewed in the learning center:</p>
+                        <ul class="insights-list" id="weak-areas-list">
+                            <!-- Dynamic list items -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERSONALIZED SAFETY TIPS -->
+            <div class="safety-tips-section">
+                <div class="section-title">
+                    <i class="fa-solid fa-circle-radiation text-amber"></i>
+                    <h2>Personalized Security Safeguards</h2>
+                </div>
+                <p class="section-subtitle">Actionable defense steps generated based on your weaknesses and assessment performance:</p>
+                <div class="tips-grid" id="safety-tips-container">
+                    <!-- Dynamic tips go here -->
+                </div>
+            </div>
+
+            <!-- DOWNLOADABLE PDF FLOATING CALL TO ACTION -->
+            <div class="action-footer">
+                <div class="action-card">
+                    <div class="action-info">
+                        <i class="fa-solid fa-file-pdf pdf-action-icon"></i>
+                        <div>
+                            <h4>Need an offline scorecard report?</h4>
+                            <p>Download a certified PDF score card containing your cybersecurity levels, scores, strengths, weaknesses, and custom security tips.</p>
+                        </div>
+                    </div>
+                    <a href="#" id="download-pdf-btn" class="btn btn-primary download-btn">
+                        <i class="fa-solid fa-download"></i> Download PDF Score Card
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- APP FOOTER -->
+        <footer class="app-footer">
+            <p>&copy; 2026 PhishGuard Cybersecurity Platform. Academic Evaluation Dashboard.</p>
+            <p class="confidentiality-notice"><i class="fa-solid fa-lock"></i> Protected Environment: No sensitive personal credentials, OTPs, or private chat data are ever collected or stored.</p>
+        </footer>
+    </div>
+</body>
+</html>

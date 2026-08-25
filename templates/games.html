@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Games Center</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- TOP NAVIGATION BAR -->
+        <header class="navbar">
+            <div class="navbar-left">
+                <a href="/" class="navbar-logo">
+                    <i class="fa-solid fa-shield-halved logo-icon"></i>
+                    <span class="logo-text">Phish<span>Guard</span></span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="/" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                    <a href="/games" class="nav-link active"><i class="fa-solid fa-gamepad"></i> Games Center</a>
+                </nav>
+            </div>
+            
+            <!-- ACADEMIC DEMO SIMULATOR PANEL -->
+            <div class="simulator-panel">
+                <label for="user-selector" class="simulator-label">
+                    <i class="fa-solid fa-chalkboard-user"></i> Demo User State:
+                </label>
+                <div class="selector-container">
+                    <select id="user-selector" class="user-select">
+                        <option value="">Loading profiles...</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="navbar-actions">
+                <span class="user-avatar-tag">
+                    <i class="fa-solid fa-user-ninja"></i>
+                    <span id="current-user-name">User</span>
+                </span>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="dashboard-content">
+            
+            <!-- INNER GAMES NAVIGATION TABS -->
+            <div class="games-nav-tabs">
+                <button class="tab-btn active" id="tab-dashboard" onclick="switchTab('dashboard')">
+                    <i class="fa-solid fa-grip"></i> Games Dashboard
+                </button>
+                <button class="tab-btn" id="tab-gamification" onclick="switchTab('gamification')">
+                    <i class="fa-solid fa-trophy"></i> Points & Achievements
+                </button>
+                <button class="tab-btn" id="tab-overall" onclick="switchTab('overall')">
+                    <i class="fa-solid fa-file-invoice"></i> Overall Report
+                </button>
+            </div>
+
+            <!-- TAB 1: GAMES DASHBOARD VIEW -->
+            <div class="tab-content active" id="content-dashboard">
+                <div class="dashboard-header-intro">
+                    <h1>Interactive Security Investigations</h1>
+                    <p>Put your social engineering defense skills to the test. Investigate suspicious linkages and answer scam challenges to earn points, unlock levels, and earn certifications.</p>
+                </div>
+
+                <div class="games-grid">
+                    <!-- GAME CARD 1: LINK DETECTIVE -->
+                    <div class="game-card">
+                        <div class="game-card-icon-header">
+                            <div class="icon-circle link-detective-color">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <span class="difficulty-tag diff-med">Medium</span>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Link Detective Game</h3>
+                            <p class="game-desc">Analyze URLs and domain details to identify hidden redirects, lookalike websites, and typosquatting tactics used by phishers.</p>
+                            
+                            <div class="game-meta-list">
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                    <span><b>Objective:</b> Spot fake/misleading URLs</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span><b>Points:</b> Up to 230 Points</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    <span><b>Length:</b> 8 Investigation Scenarios</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-spinner"></i>
+                                    <span><b>Status:</b> <span class="status-badge" id="ld-status-text">Not Attempted</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-footer">
+                            <button class="btn btn-primary btn-full" id="start-ld-btn" onclick="startPlayGame('link_detective')">
+                                <i class="fa-solid fa-play"></i> Start Investigation
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GAME CARD 2: SCAM RESPONSE CHALLENGE -->
+                    <div class="game-card">
+                        <div class="game-card-icon-header">
+                            <div class="icon-circle scam-response-color">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <span class="difficulty-tag diff-hard">Hard</span>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Scam Response Challenge</h3>
+                            <p class="game-desc">Respond to high-pressure emergency scenarios such as fraudulent bank calls, OTP requests, delivery traps, and supervisor impersonations.</p>
+                            
+                            <div class="game-meta-list">
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                    <span><b>Objective:</b> Determine correct response actions</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span><b>Points:</b> Up to 230 Points</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    <span><b>Length:</b> 8 Scenario Investigations</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-spinner"></i>
+                                    <span><b>Status:</b> <span class="status-badge" id="sr-status-text">Not Attempted</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-footer">
+                            <button class="btn btn-primary btn-full" id="start-sr-btn" onclick="startPlayGame('scam_response')">
+                                <i class="fa-solid fa-play"></i> Start Challenge
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PROGRESS SUMMARY PANEL CARD -->
+                    <div class="game-card progress-summary-card">
+                        <div class="game-card-body">
+                            <h3>Career Dashboard</h3>
+                            <div class="gamified-summary-widget">
+                                <div class="level-badge-wrap">
+                                    <span class="level-circle-widget" id="dash-level-number">1</span>
+                                    <div>
+                                        <h4 id="dash-level-title">Beginner</h4>
+                                        <p class="text-slate">Current Rank</p>
+                                    </div>
+                                </div>
+
+                                <div class="points-progress-widget">
+                                    <div class="progress-labels">
+                                        <span>Points: <b id="dash-points-value">0</b></span>
+                                        <span class="text-slate" id="dash-points-next">Next level at 300</span>
+                                    </div>
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" id="dash-points-bar-fill" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="badges-widget-summary">
+                                    <h4>Earned Badges</h4>
+                                    <div class="badges-summary-row" id="dash-badges-row">
+                                        <span class="locked-badge-placeholder">Complete games to unlock badges</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-footer">
+                            <button class="btn btn-secondary btn-full" onclick="switchTab('gamification')">
+                                <i class="fa-solid fa-award"></i> View Achievements
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: GAMIFICATION DASHBOARD VIEW -->
+            <div class="tab-content" id="content-gamification">
+                <div class="dashboard-header-intro">
+                    <h1>Points, Badges & Levels</h1>
+                    <p>Track your points progression, level ranking, and check your security achievements. Complete investigations to unlock locked badges.</p>
+                </div>
+
+                <div class="gamification-profile-row">
+                    <!-- LEVEL & POINTS COLUMN -->
+                    <div class="gamification-card level-card">
+                        <div class="level-visual-ring">
+                            <div class="level-visual-center">
+                                <span class="level-number-huge" id="profile-level-number">1</span>
+                                <span class="level-label" id="profile-level-title">Beginner</span>
+                            </div>
+                        </div>
+                        <div class="level-progress-block">
+                            <div class="progress-details-row">
+                                <span>Level Progress</span>
+                                <span id="profile-points-label">0 / 300 XP</span>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="profile-points-bar-fill" style="width: 0%;"></div>
+                            </div>
+                            <p class="points-total-lbl">Total Accumulated XP: <span id="profile-total-points">0</span> Points</p>
+                        </div>
+                    </div>
+
+                    <!-- BADGES COLUMN -->
+                    <div class="gamification-card badges-card">
+                        <div class="card-header">
+                            <h3>Vigilance Badges Portfolio</h3>
+                            <i class="fa-solid fa-medal header-icon"></i>
+                        </div>
+                        <div class="badges-list-grid" id="profile-badges-grid">
+                            <!-- Dynamic badges loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: OVERALL INVESTIGATION REPORT VIEW -->
+            <div class="tab-content" id="content-overall">
+                <div class="dashboard-header-intro">
+                    <h1>Overall Investigation Report</h1>
+                    <p>Combined safety evaluation reporting assessing completed security simulations, accuracy quotients, and credential unlock status.</p>
+                </div>
+
+                <div class="overall-report-container" id="overall-report-widget">
+                    <!-- Report details loaded dynamically by JS -->
+                    <div class="skeleton-loader"></div>
+                </div>
+            </div>
+
+            <!-- PLAY SCREEN VIEW (HIDDEN BY DEFAULT) -->
+            <div class="play-container-wrap" id="play-container-view" style="display: none;">
+                <div class="play-header">
+                    <button class="btn btn-secondary btn-sm" onclick="exitGamePlay()">
+                        <i class="fa-solid fa-arrow-left"></i> Exit Simulation
+                    </button>
+                    <div class="game-timer">
+                        <i class="fa-solid fa-hourglass-half"></i> Time: <span id="timer-val">00:00</span>
+                    </div>
+                </div>
+
+                <div class="game-play-board">
+                    <div class="game-play-sidebar">
+                        <div class="game-title-header">
+                            <h2 id="play-game-title">Game Title</h2>
+                            <p class="text-slate" id="play-game-subtitle">Difficulty: Medium</p>
+                        </div>
+                        <div class="question-nav-grid" id="play-nav-grid">
+                            <!-- Nav items dynamically generated -->
+                        </div>
+                    </div>
+
+                    <div class="game-play-content">
+                        <div class="scenario-number-badge">SCENARIO <span id="play-current-index">1</span> OF <span id="play-total-questions">8</span></div>
+                        <h3 class="scenario-text" id="play-scenario-text">Scenario description goes here...</h3>
+
+                        <div class="options-container-list" id="play-options-list">
+                            <!-- Options dynamically generated -->
+                        </div>
+
+                        <div class="play-nav-actions">
+                            <button class="btn btn-secondary" id="play-prev-btn" onclick="navQuestion(-1)">
+                                <i class="fa-solid fa-angle-left"></i> Previous
+                            </button>
+                            <button class="btn btn-primary" id="play-next-btn" onclick="navQuestion(1)">
+                                Next <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                            <button class="btn btn-success" id="play-submit-btn" style="display: none;" onclick="submitGameAnswers()">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Final Investigation Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INDIVIDUAL INVESTIGATION REPORT VIEW (HIDDEN BY DEFAULT) -->
+            <div class="report-container-wrap" id="report-container-view" style="display: none;">
+                <div class="report-header-actions">
+                    <button class="btn btn-secondary" onclick="exitGamePlay()">
+                        <i class="fa-solid fa-angle-left"></i> Back to Games Dashboard
+                    </button>
+                </div>
+
+                <!-- REPORT METRICS BAR -->
+                <div class="report-summary-block" id="report-summary-block">
+                    <!-- Dynamic details go here -->
+                </div>
+
+                <!-- DETAILED ANSWERS FEEDBACK -->
+                <div class="report-answers-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-folder-open text-primary"></i>
+                        <h2>Detailed Evidence Review</h2>
+                    </div>
+                    <p class="section-subtitle">Examine the investigation details, correcting answers and learning key social engineering defense concepts.</p>
+                    
+                    <div class="answers-review-list" id="report-answers-list">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- FEEDBACK FORM MODULE -->
+                <div class="report-feedback-section" id="report-feedback-section">
+                    <div class="feedback-card">
+                        <div class="feedback-icon-title">
+                            <i class="fa-solid fa-comments"></i>
+                            <div>
+                                <h3>Give Feedback</h3>
+                                <p class="text-slate">Let us know how we can improve this simulation scenario</p>
+                            </div>
+                        </div>
+
+                        <form id="feedback-form" onsubmit="submitFeedbackForm(event)">
+                            <input type="hidden" id="feedback-session-id" name="session_id">
+                            
+                            <div class="form-row">
+                                <label class="form-label">Simulation Rating:</label>
+                                <div class="rating-stars-row">
+                                    <input type="radio" id="star5" name="rating" value="5" required><label for="star5"><i class="fa-solid fa-star"></i></label>
+                                    <input type="radio" id="star4" name="rating" value="4"><label for="star4"><i class="fa-solid fa-star"></i></label>
+                                    <input type="radio" id="star3" name="rating" value="3"><label for="star3"><i class="fa-solid fa-star"></i></label>
+                                    <input type="radio" id="star2" name="rating" value="2"><label for="star2"><i class="fa-solid fa-star"></i></label>
+                                    <input type="radio" id="star1" name="rating" value="1"><label for="star1"><i class="fa-solid fa-star"></i></label>
+                                </div>
+                            </div>
+
+                            <div class="form-grid-columns">
+                                <div class="form-group">
+                                    <label class="form-label" for="liked_aspects">What did you like about this game?</label>
+                                    <select class="form-control" id="liked_aspects" name="liked_aspects">
+                                        <option value="Realism of scenarios">Realism of scenarios</option>
+                                        <option value="Detailed educational feedback">Detailed educational explanations</option>
+                                        <option value="Timer urgency challenge">Timer urgency challenge</option>
+                                        <option value="Points/Badges gamification">Points/Badges system</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="explanation_useful">Was the explanation useful?</label>
+                                    <select class="form-control" id="explanation_useful" name="explanation_useful">
+                                        <option value="Yes, very useful">Yes, extremely useful</option>
+                                        <option value="Somewhat useful">Somewhat useful</option>
+                                        <option value="No, too technical">No, too technical</option>
+                                        <option value="No, too simple">No, too simple</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="difficulty">Was the question difficulty appropriate?</label>
+                                    <select class="form-control" id="difficulty" name="difficulty">
+                                        <option value="Just right">Just right</option>
+                                        <option value="Too easy">Too easy</option>
+                                        <option value="Too difficult">Too difficult</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="suggestions">Suggestions for improvement:</label>
+                                    <select class="form-control" id="suggestions" name="suggestions">
+                                        <option value="Add more questions">Add more scenarios</option>
+                                        <option value="Increase difficulty">Increase difficulty</option>
+                                        <option value="Provide hint indicators">Provide hint indicators</option>
+                                        <option value="None, it is great">None, it is great</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="comments">Optional Comments:</label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Tell us more about your experience..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Feedback
+                            </button>
+                        </form>
+                        <div class="feedback-success-msg" id="feedback-success-msg" style="display: none;">
+                            <i class="fa-solid fa-circle-check"></i> Thank you! Your feedback has been recorded in the database.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- APP FOOTER -->
+        <footer class="app-footer">
+            <p>&copy; 2026 PhishGuard Cybersecurity Platform. Academic Evaluation Dashboard.</p>
+            <p class="confidentiality-notice"><i class="fa-solid fa-lock"></i> Protected Environment: No sensitive credentials, OTPs, or private chat logs are ever collected or stored.</p>
+        </footer>
+    </div>
+
+    <!-- Script assets -->
+    <script src="{{ url_for('static', filename='js/games.js') }}"></script>
+</body>
+</html>
